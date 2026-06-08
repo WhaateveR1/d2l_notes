@@ -50,3 +50,21 @@ def evaluate_accuracy(net,data_iter):
         for X,y in data_iter:
             metric.add(accuracy(net(X),y),y.numel())
     return metric[0]/metric[1]
+
+def train_epoch_ch3(net,train_iter,loss,updater):
+    if isinstance(net,torch.nn.Module):
+        net.train()
+    metric = Accumulator(3)
+    for X,y in train_iter:
+        y_hat = net(X)
+        l = loss(y_hat,y)
+        if isinstance(updater,torch.optim.Optimizer):
+            updater.zero_grad()
+            l.mean().backward()
+            updater.step()
+        else:
+            l.sum.backward()
+            updater(X.shape[0])
+        metric.add(float(l.sum()),accuracy(y_hat,y),y.numel())
+    return metric[0]/metric[2],metric[1]/metric[2]
+
