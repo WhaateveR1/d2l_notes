@@ -1,2 +1,1 @@
-afsdgvwdsv
-asdgvfddf
+A private d2l learning workspace by Abstergo
